@@ -30,3 +30,9 @@ New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills" -Target "$HOME\gith
 
 
 ```
+
+## Skills Hub
+
+- <https://skills.sh/>
+
+
