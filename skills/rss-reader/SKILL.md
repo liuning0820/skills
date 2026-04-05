@@ -51,6 +51,24 @@ python scripts/rss_subscriber.py --opml "path/to/subscriptions.opml"
 python scripts/rss_subscriber.py
 ```
 
+### 日期过滤选项
+
+**默认行为（只获取最近 1 年的文章）：**
+
+```bash
+python scripts/rss_subscriber.py --opml "feeds.opml"
+```
+
+这会过滤掉 1 年前的旧文章，专注于最新内容。
+
+**获取所有历史文章：**
+
+使用 `--get-all` 选项获取 RSS 源中的所有文章，包括 1 年前的：
+
+```bash
+python scripts/rss_subscriber.py --opml "feeds.opml" --get-all
+```
+
 ## 输出格式
 
 文章将保存为以下格式的 Markdown 文件：

@@ -18,13 +18,16 @@ import os
 import re
 import sys
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timedelta
 import ssl
 import urllib.request
 
 # 获取脚本所在目录路径，用于查找默认的 feeds.opml 文件
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_OPML_FILE = os.path.join(SCRIPT_DIR, 'feeds.opml')
+
+# 日期过滤：默认只获取最近 1 年的文章
+ONE_YEAR_AGO = datetime.now() - timedelta(days=365)
 
 
 def sanitize_filename(name: str) -> str:
@@ -275,6 +278,7 @@ def main():
     output_dir = 'raw'
     opml_file = None
     direct_url = None
+    get_all = False  # 是否获取所有文章（包括 1 年前的）
 
     # 解析命令行参数
     args = sys.argv[1:]
@@ -286,6 +290,9 @@ def main():
         elif args[i] == '--output' and i + 1 < len(args):
             output_dir = args[i + 1]
             i += 2
+        elif args[i] == '--get-all':
+            get_all = True
+            i += 1
         elif not args[i].startswith('--'):
             # 直接传入 RSS URL
             direct_url = args[i]
@@ -315,14 +322,21 @@ def main():
         print("\n选项:")
         print("  --opml <文件>    从 OPML 文件读取订阅源")
         print("  --output <目录>  指定输出目录 (默认：./raw)")
+        print("  --get-all        获取所有文章，包括 1 年前的 (默认只获取最近 1 年)")
         print("\n示例:")
         print('  python rss_subscriber.py "https://example.com/feed.rss"')
         print('  python rss_subscriber.py --opml "./subscriptions.opml"')
         print('  python rss_subscriber.py --output "./raw" "https://example.com/feed.rss"')
+        print('  python rss_subscriber.py --get-all  (获取所有文章)')
         print('  python rss_subscriber.py  (使用默认的 feeds.opml)')
         return
 
-    print(f"\n总共处理 {len(all_feeds)} 个订阅源")
+    # 显示过滤模式
+    if get_all:
+        print(f"\n过滤模式：获取所有文章（包括 1 年前的）")
+    else:
+        print(f"\n过滤模式：只获取最近 1 年的文章（{ONE_YEAR_AGO.strftime('%Y-%m-%d')} 之后）")
+    print(f"总共处理 {len(all_feeds)} 个订阅源")
 
     # 处理每个订阅源
     total_saved = 0
@@ -338,6 +352,24 @@ def main():
             continue
 
         print(f"  获取到 {len(articles)} 篇文章")
+
+        # 日期过滤：默认只获取最近 1 年的文章
+        if not get_all:
+            filtered_articles = []
+            for article in articles:
+                article_date = datetime.strptime(article['date'], '%Y-%m-%d')
+                if article_date >= ONE_YEAR_AGO:
+                    filtered_articles.append(article)
+                else:
+                    print(f"  跳过 (超过 1 年): {article['date']} - {article['title'][:50]}...")
+            skipped_count = len(articles) - len(filtered_articles)
+            if skipped_count > 0:
+                print(f"  过滤后剩余 {len(filtered_articles)} 篇文章（跳过 {skipped_count} 篇旧文章）")
+            articles = filtered_articles
+
+        if not articles:
+            print("  过滤后没有符合条件的文章")
+            continue
 
         # 按日期排序
         articles.sort(key=lambda x: x['date'], reverse=True)
