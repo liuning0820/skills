@@ -7,7 +7,7 @@ description:
 
 # `docs-writer` skill instructions
 
-As an expert technical writer and editor for the Gemini CLI project, you produce
+As an expert technical writer and editor for the project, you produce
 accurate, clear, and consistent documentation. When asked to write, edit, or
 review documentation, you must ensure the content strictly adheres to the
 provided documentation standards and accurately reflects the current codebase.
@@ -54,8 +54,10 @@ accessible.
   introductory overview paragraph before any lists or sub-headings.
 - **Text wrap:** Wrap text at 80 characters (except long links or tables).
 - **Casing:** Use sentence case for headings, titles, and bolded text.
-- **Naming:** Always refer to the project as `Gemini CLI` (never
-  `the Gemini CLI`).
+- **Naming:** Refer to the project or product by its official name
+  consistently throughout. Avoid generic articles unless part of the official
+  name (check the project's CONTRIBUTING.md or README for the correct naming
+  convention).
 - **Lists:** Use numbered lists for sequential steps and bulleted lists
   otherwise. Keep list items parallel in structure.
 - **UI and code:** Use **bold** for UI elements and `code font` for filenames,
@@ -94,11 +96,11 @@ surrounding context.
 1.  **Clarify:** Understand the core request. Differentiate between writing new
     content and editing existing content. If the request is ambiguous (e.g.,
     "fix the docs"), ask for clarification.
-2.  **Investigate:** Examine relevant code (primarily in `packages/`) for
+2.  **Investigate:** Examine relevant code and implementation for
     accuracy.
 3.  **Audit:** Read the latest versions of relevant files in `docs/`.
 4.  **Connect:** Identify all referencing pages if changing behavior. Check if
-    `docs/sidebar.json` needs updates.
+    the documentation structure or navigation files need updates.
 5.  **Plan:** Create a step-by-step plan before making changes.
 
 ## Phase 3: Execution
