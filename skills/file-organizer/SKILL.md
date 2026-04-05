@@ -423,6 +423,137 @@ Documents folder.
 - Old versions after migration to new systems
 - Files you're hesitant to delete (archive first)
 
+## Markdown Document Organization
+
+This skill also handles Markdown document formatting and organization, applying docs-writer standards.
+
+### When to Use for Markdown
+
+- Need to format Markdown documents according to docs-writer standards
+- Want to rename files with descriptive names (kebab-case)
+- Need to establish cross-references between related documents
+- Want to clean up document structure and formatting
+
+### Markdown Organization Tasks
+
+```
+Format this Markdown document and rename it with a descriptive name
+```
+
+```
+Organize these Markdown files and establish links between related documents
+```
+
+```
+Apply docs-writer standards to this document, keep Chinese content
+```
+
+### Markdown Organization Process
+
+When organizing Markdown documents:
+
+1. **Read Target Document**
+   - Use read_file to understand current content and structure
+   - Identify document type and purpose
+
+2. **Read Reference Documents (if specified)**
+   - Read related documents to understand context
+   - Identify potential cross-reference opportunities
+
+3. **Apply docs-writer Formatting Standards**
+
+   **Title Formatting**:
+   - Remove emoji from titles
+   - Convert to sentence case (capitalize first word and proper nouns only)
+   - **PRESERVE ORIGINAL LANGUAGE**: Keep titles in their original language (Chinese stays Chinese, English stays English)
+   - Example: "🎬 My Movie Review" → "My movie review"
+   - Example: "🎬 电影观后感" → "电影观后感" (NOT "Movie review")
+
+   **Content Improvements**:
+   - Add BLUF (Bottom Line Up Front) summary paragraph (in the same language as the document)
+   - Use active voice (subject performs the action)
+   - Write in second person ("you") to speak directly to readers (or "你" for Chinese documents)
+   - Use present tense verbs ("is", "open") instead of past tense ("was", "opened")
+   - Write factual statements and direct commands
+   - Avoid hypotheticals like "could" or "would"
+   - **PRESERVE ORIGINAL LANGUAGE**: Do not translate content between languages. Keep Chinese content in Chinese, English content in English.
+
+   **Structure**:
+   - Use proper heading hierarchy (H1 → H2 → H3)
+   - Use bullet points for lists
+   - Include code blocks for code snippets
+   - Add links to related resources
+
+4. **Rename File (if needed)**
+   - Convert meaningless names (like "1.md") to descriptive kebab-case names
+   - Example: "1.md" → "the-legend-of-1900.md"
+   - Example: "notes.md" → "docker-compose-troubleshooting.md"
+
+5. **Establish Document Associations**
+   - Add "Related Documents" section at the end
+   - Create bidirectional links between related documents
+   - Use relative paths for links: `[Movie reviews](../movies/movie.md)`
+
+6. **Execute Changes**
+   - Use replace_string_in_file for content updates
+   - Use terminal mv command for renaming
+   - Update cross-references in related documents
+
+### Markdown Organization Examples
+
+**Example 1: Format and Rename Document (Chinese Content)**
+
+User: "整理这个文档，保持中文，参考 movie.md"
+
+Process:
+1. Read target document (e.g., "1.md")
+2. Read reference document (movie.md)
+3. Format content:
+   - Remove emoji from title
+   - Keep title in Chinese (e.g., "# 海上钢琴师" stays "# 海上钢琴师", NOT "# The Legend of 1900")
+   - Add BLUF paragraph in Chinese
+   - Improve structure with proper headings
+   - Apply active voice and second person (in Chinese)
+4. Rename: "1.md" → "the-legend-of-1900.md" (filename can be English for URL compatibility)
+5. Add cross-reference in movie.md linking to new document
+
+**Example 2: Format Document (English Content)**
+
+User: "Format this document following docs-writer standards"
+
+Process:
+1. Read target document
+2. Format content:
+   - Remove emoji from title
+   - Convert to sentence case (e.g., "# My Movie Review" → "# My movie review")
+   - Add BLUF paragraph in English
+   - Apply active voice and second person
+3. Rename if needed with descriptive kebab-case name
+4. Add cross-references to related documents
+
+**Example 2: Batch Organize Multiple Documents**
+
+User: "Organize all Markdown files in this folder"
+
+Process:
+1. List all .md files in directory
+2. For each file:
+   - Read and analyze content
+   - Apply docs-writer formatting
+   - Rename if filename is not descriptive
+   - Identify related documents
+3. Create cross-reference links between related documents
+4. Provide summary of changes
+
+### Best Practices for Markdown Organization
+
+1. **Preserve Content**: Keep all original information while improving formatting
+2. **Maintain Language**: Preserve Chinese or other language content - do not translate titles or body text
+3. **Descriptive Names**: Use clear, kebab-case filenames that describe content (preserve Chinese in titles)
+4. **Cross-References**: Always add bidirectional links between related documents
+5. **BLUF First**: Every document should start with a clear summary paragraph (in the document's language)
+6. **Consistent Style**: Apply docs-writer standards consistently across all documents while respecting language
+
 ## Related Use Cases
 
 - Setting up organization for a new computer
@@ -430,3 +561,6 @@ Documents folder.
 - Cleaning up before storage cleanup
 - Organizing shared team folders
 - Structuring new project directories
+- Formatting Markdown documentation
+- Establishing document cross-references
+- Applying consistent writing standards across docs
