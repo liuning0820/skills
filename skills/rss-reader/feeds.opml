@@ -5,7 +5,9 @@
 	</head>
 	<body>
 	<outline text="Accidentally in Code" title="Accidentally in Code" type="rss" htmlUrl="https://cate.blog/" xmlUrl="https://cate.blog/feed/"/>
+	<outline text="All Things Distributed" title="All Things Distributed" type="rss" htmlUrl="https://www.allthingsdistributed.com/" xmlUrl="https://www.allthingsdistributed.com/atom.xml"/>
 	<outline text="Coding Horror" title="Coding Horror" type="rss" xmlUrl="https://blog.codinghorror.com/rss/"/>
 	<outline text="Nick Bradbury" title="Nick Bradbury" type="rss" htmlUrl="https://nickbradbury.com" xmlUrl="https://nickbradbury.com/feed/"/>
+	<outline text="overreacted" title="A blog by Dan Abramov" type="rss" htmlUrl="https://overreacted.io/" xmlUrl="https://overreacted.io/atom.xml" />
 	</body>
 </opml>
