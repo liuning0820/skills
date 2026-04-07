@@ -63,9 +63,7 @@ Fetch a source into raw/, then compile it into wiki/. Always both steps, no exce
 
 1. Get the source content using whatever web or file tools your environment provides. If nothing can reach the source, ask the user to paste it directly.
 
-2. Pick a topic directory. Check existing `raw/` subdirectories first; reuse one if the topic is close enough. Create a new subdirectory only for genuinely distinct topics.
-
-3. Save as `raw/<topic>/YYYY-MM-DD-descriptive-slug.md`.
+2. Save as `raw/YYYY-MM-DD-descriptive-slug.md`.
    - Slug from source title, kebab-case, max 60 characters.
    - Published date unknown → omit the date prefix from the file name (e.g., `descriptive-slug.md`). The metadata Published field still appears; set it to `Unknown`.
    - If a file with the same name already exists, append a numeric suffix (e.g., `descriptive-slug-2.md`).
@@ -79,8 +77,6 @@ Fetch a source into raw/, then compile it into wiki/. Always both steps, no exce
 Determine where the new content belongs:
 
 - **Same core thesis as existing article** → Merge into that article. Add the new source to Sources/Raw. Update affected sections.
-- **New concept** → Create a new article in the most relevant topic directory. Name the file after the concept, not the raw file.
-- **Spans multiple topics** → Place in the most relevant directory. Add See Also cross-references to related articles elsewhere.
 
 These are not mutually exclusive. A single source may warrant merging into one article while also creating a separate article for a distinct concept it introduces. In all cases, check for factual conflicts: if the new source contradicts existing content, annotate the disagreement with source attribution. When merging, note the conflict within the merged article. When the conflicting content lives in separate articles, note it in both and cross-link them.
 
@@ -129,9 +125,8 @@ For each raw file, create a summary in `wiki/summaries/` :
 
 After the primary article, check for ripple effects:
 
-1. Scan articles in the same topic directory for content affected by the new source.
-2. Scan `wiki/index.md` entries in other topics for articles covering related concepts.
-3. Update every article whose content is materially affected. Each updated file gets its Updated date refreshed.
+1. Scan `wiki/index.md` entries in other articles covering related concepts.
+2. Update every article whose content is materially affected. Each updated file gets its Updated date refreshed.
 
 Archive pages are never cascade-updated (they are point-in-time snapshots).
 
@@ -229,7 +224,7 @@ Fix these automatically:
   - Exactly one match → fix the path.
   - Zero or multiple matches → report to the user.
 
-**See Also** — within each topic directory:
+**See Also** — within each directory:
 - Add obviously missing cross-references between related articles.
 - Remove links to deleted files.
 
@@ -241,7 +236,7 @@ These rely on your judgment. Report findings without auto-fixing:
 - Outdated claims superseded by newer sources
 - Missing conflict annotations where sources disagree
 - Orphan pages with no inbound links from other wiki articles
-- Missing cross-topic references
+- Missing cross-concept references
 - Concepts frequently mentioned but lacking a dedicated page
 - Archive pages whose cited source articles have been substantially updated since archival
 
@@ -258,7 +253,6 @@ Append to `wiki/log.md`:
 ## Conventions
 
 - Standard markdown with relative links throughout.
-- wiki/ supports one level of topic subdirectories only. No deeper nesting.
 - Today's date for log entries, Collected dates, and Archived dates. Updated dates reflect when the article's knowledge content last changed. Published dates come from the source (use `Unknown` when unavailable).
-- Inside wiki/ files, all markdown links use paths relative to the current file. In conversation output, use project-root-relative paths (e.g., `wiki/topic/article.md`).
+- Inside wiki/ files, all markdown links use paths relative to the current file. In conversation output, use project-root-relative paths (e.g., `wiki/article.md`).
 - Ingest updates both `wiki/index.md` and `wiki/log.md`. Archive (from Query) updates both. Lint updates `wiki/log.md` (and `wiki/index.md` only when auto-fixing index entries). Plain queries do not write any files.
