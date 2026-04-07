@@ -252,7 +252,9 @@ def save_article(article: dict, rss_source: str, output_dir: str) -> str:
     filepath = os.path.join(output_dir, filename)
 
     if os.path.exists(filepath):
-        print(f"  跳过 (已存在): {filename}")
+        print(f"  跳过 (已存在): {filename}",
+              flush=True,
+              file=sys.__stdout__)
         return filepath
 
     markdown_content = article_to_markdown(article, rss_source)
@@ -260,7 +262,9 @@ def save_article(article: dict, rss_source: str, output_dir: str) -> str:
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(markdown_content)
-        print(f"  已保存：{filename}")
+        print(f"  已保存：{filename}",
+              flush=True,
+              file=sys.__stdout__)
     except Exception as e:
         print(f"  保存失败：{e}")
         return ''
@@ -361,7 +365,8 @@ def main():
                 if article_date >= ONE_YEAR_AGO:
                     filtered_articles.append(article)
                 else:
-                    print(f"  跳过 (超过 1 年): {article['date']} - {article['title'][:50]}...")
+                    print(f"  跳过 (超过 1 年): {article['date']} - {article['title'][:50]}...",
+                          flush=True)
             skipped_count = len(articles) - len(filtered_articles)
             if skipped_count > 0:
                 print(f"  过滤后剩余 {len(filtered_articles)} 篇文章（跳过 {skipped_count} 篇旧文章）")
