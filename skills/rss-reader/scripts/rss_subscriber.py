@@ -242,6 +242,34 @@ def article_to_markdown(article: dict, rss_source: str) -> str:
     return content
 
 
+def extract_link_from_markdown(filepath: str) -> str:
+    """从已存在的 Markdown 文件中提取文章链接"""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        # 查找 **链接**: 后面的 URL
+        match = re.search(r'\*\*链接\*\*:\s*(.+)', content)
+        if match:
+            return match.group(1).strip()
+    except Exception:
+        pass
+    return ''
+
+
+def find_existing_article_by_link(article_link: str, output_dir: str) -> str:
+    """检查是否已存在相同链接的文章，返回现有文件路径"""
+    if not article_link:
+        return ''
+
+    for filename in os.listdir(output_dir):
+        if filename.endswith('.md'):
+            filepath = os.path.join(output_dir, filename)
+            existing_link = extract_link_from_markdown(filepath)
+            if existing_link == article_link:
+                return filepath
+    return ''
+
+
 def save_article(article: dict, rss_source: str, output_dir: str) -> str:
     """保存文章到文件，返回保存路径"""
     os.makedirs(output_dir, exist_ok=True)
@@ -251,11 +279,23 @@ def save_article(article: dict, rss_source: str, output_dir: str) -> str:
 
     filepath = os.path.join(output_dir, filename)
 
+    # 检查文件名是否已存在
     if os.path.exists(filepath):
         print(f"  跳过 (已存在): {filename}",
               flush=True,
               file=sys.__stdout__)
         return filepath
+
+    # 检查是否已存在相同链接的文章（基于 URL 去重）
+    article_link = article.get('link', '')
+    if article_link:
+        existing_filepath = find_existing_article_by_link(article_link, output_dir)
+        if existing_filepath:
+            existing_filename = os.path.basename(existing_filepath)
+            print(f"  跳过 (链接已存在): {filename} -> 已存在: {existing_filename}",
+                  flush=True,
+                  file=sys.__stdout__)
+            return existing_filepath
 
     markdown_content = article_to_markdown(article, rss_source)
 

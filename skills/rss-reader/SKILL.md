@@ -1,3 +1,8 @@
+---
+name: rss-reader
+description: "Use when the user wants to fetch content from RSS feeds, save RSS articles to local folders, subscribe to blogs, organize articles by date and title, or process OPML files containing multiple RSS sources. Triggers: 'RSS feed', 'subscribe to blog', 'save RSS articles', 'OPML file', 'fetch latest articles'."
+---
+
 # RSS Reader 技能
 
 从 RSS 源订阅并获取最新内容，自动保存到本地知识库。
