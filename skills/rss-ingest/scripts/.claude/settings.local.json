@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python ~/.claude/skills/rss-ingest/scripts/process_raw_files.py)",
+      "Bash(cd \"C:/Users/1/github/doc-writing-as-code\" && python /c/Users/1/github/skills/skills/rss-ingest/scripts/process_raw_files.py)",
+      "Bash(cd \"C:/Users/1/github/doc-writing-as-code\" && python /c/Users/1/github/skills/skills/rss-ingest/scripts/update_index.py)",
+      "Bash(ls -1 \"C:/Users/1/github/doc-writing-as-code/raw/*.md\" 2>/dev/null | wc -l && echo \"---\" && ls -1 \"C:/Users/1/github/doc-writing-as-code/wiki/summaries/*_summary.md\" 2>/dev/null | wc -l)"
+    ]
+  }
+}

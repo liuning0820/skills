@@ -55,11 +55,24 @@ python scripts/rss_subscriber.py --opml "path/to/subscriptions.opml"
 
 #### 使用默认订阅源
 
-如果不提供任何参数，将自动使用技能目录下的默认 `feeds.opml` 文件：
+如果不提供任何参数，将自动使用技能目录下的默认 `feeds.opml` 文件，并将文章保存到**当前工作目录**的 `raw/` 文件夹：
 
 ```bash
 python scripts/rss_subscriber.py
 ```
+
+**注意**：输出目录取决于你**执行命令时所在的目录**。例如：
+
+```bash
+# 在 doc-writing-as-code 项目目录下执行
+cd C:/Users/1/github/doc-writing-as-code
+python /c/Users/1/github/skills/skills/rss-ingest/scripts/rss_subscriber.py --opml /c/Users/1/.claude/skills/rss-ingest/feeds.opml
+# 文章将保存到：C:/Users/1/github/doc-writing-as-code/raw/
+```
+
+#### 避免在脚本目录生成配置目录
+
+执行命令时，建议先 `cd` 到目标项目目录，这样可以避免在技能脚本目录下生成 `.claude` 配置目录和 `settings.local.json` 文件。
 
 #### 日期过滤选项
 
@@ -172,8 +185,16 @@ grep -q "^文件名.md$" wiki/.processed_files
 **方案 3：通过脚本自动化检查**
 
 ```bash
-./scripts/process_raw_files.sh
+python /c/Users/1/github/skills/skills/rss-ingest/scripts/process_raw_files.py
 ```
+
+**重要**：脚本使用当前工作目录（`os.getcwd()`）作为项目根目录，因此**必须在项目目录下执行**：
+
+```bash
+cd C:/Users/1/github/doc-writing-as-code
+python /c/Users/1/github/skills/skills/rss-ingest/scripts/process_raw_files.py
+```
+
 - 脚本会列出所有需要处理的新文件
 - 自动跳过已处理的文件
 
@@ -284,7 +305,7 @@ grep -q "^文件名.md$" wiki/.processed_files
 4. **链接验证**：确保所有 `[[xxx]]` 链接的文件实际存在
 5. **日期格式**：统一使用 `YYYY-MM-DD`
 6. **防重复处理**：
-   - 每次处理前先运行 `./scripts/process_raw_files.sh` 检查
+   - 每次处理前先在项目目录下运行 `python /c/Users/1/github/skills/skills/rss-ingest/scripts/process_raw_files.py` 检查
    - 处理完成后，文件名会自动记录到 `wiki/.processed_files`
    - **说明**：`.processed_files` 中的记录会阻止脚本重复生成 summary
      - 如果只删除了 summary 文件（记录还在），脚本会跳过不会重新生成
@@ -307,12 +328,15 @@ grep -q "^文件名.md$" wiki/.processed_files
 
 技能包含以下辅助脚本，用于文档编译工作流：
 
-### `process_raw_files.sh` - 检查新文件
+### `process_raw_files.py` - 检查新文件
 
 检查 `raw/` 目录中的新文件并防止重复处理：
 
+**注意**：此脚本使用**当前工作目录**作为项目根目录，因此必须在项目目录下执行：
+
 ```bash
-./scripts/process_raw_files.sh
+cd C:/Users/1/github/doc-writing-as-code
+python /c/Users/1/github/skills/skills/rss-ingest/scripts/process_raw_files.py
 ```
 
 **功能：**
@@ -321,12 +345,15 @@ grep -q "^文件名.md$" wiki/.processed_files
 - 列出需要处理的新文件
 - 自动跟踪已处理的文件到 `.processed_files`
 
-### `update_index.sh` - 更新索引
+### `update_index.py` - 更新索引
 
 更新 `wiki/index.md` 文件，添加新的 summary 链接：
 
+**注意**：此脚本使用**当前工作目录**作为项目根目录，因此必须在项目目录下执行：
+
 ```bash
-./scripts/update_index.sh
+cd C:/Users/1/github/doc-writing-as-code
+python /c/Users/1/github/skills/skills/rss-ingest/scripts/update_index.py
 ```
 
 **功能：**

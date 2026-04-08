@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <body>
+    <outline text="技术博客" title="技术博客">
+      <outline type="rss" text="Martin Fowler" xmlUrl="https://martinfowler.com/feed.atom"/>
+    </outline>
+    <outline text="开发者资讯" title="开发者资讯">
+      <outline type="rss" text="Hacker News" xmlUrl="https://hnrss.org/frontpage"/>
+    </outline>
+  </body>
+</opml>

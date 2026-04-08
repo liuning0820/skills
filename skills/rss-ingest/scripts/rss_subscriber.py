@@ -319,7 +319,7 @@ def main():
     print("=" * 50)
 
     # 默认配置：使用当前工作目录的 raw 文件夹
-    output_dir = 'raw'
+    output_dir = os.path.join(os.getcwd(), 'raw')
     opml_file = None
     direct_url = None
     get_all = False  # 是否获取所有文章（包括 1 年前的）
