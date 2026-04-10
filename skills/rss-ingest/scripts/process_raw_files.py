@@ -82,8 +82,8 @@ def main():
 
     if new_count > 0:
         print("发现新文件，请执行以下步骤：")
-        print("1. 阅读 wiki/LLM_COMPILETION_PROMPT.md")
-        print("2. 按照其中的指南处理上述新文件（生成 summary）")
+        print("1. 阅读 SKILL.md")
+        print("2. 按照其中文档编译助手组件的工作流程处理新文件并生成总结文件")
         print("3. 运行 ./scripts/update_index.sh 更新索引文件")
         print("")
         print("新文件列表:")
