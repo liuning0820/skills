@@ -53,13 +53,22 @@ def main():
     # 转换为带 - 的列表格式
     list_entries = "\n".join(f"- {entry}" for entry in latest_entries)
 
-    # 检查是否已经有这些条目（检查是否有 llm-wiki_summary）
+    # 检查索引是否包含最新的 summary
     with open(INDEX_FILE, 'r', encoding='utf-8') as f:
         index_content = f.read()
 
-    if "llm-wiki_summary" in index_content:
-        print("索引已包含 llm-wiki_summary，无需更新")
-        exit(0)
+    # 检查最新的 summary 是否已在索引中
+    latest_summary = os.path.basename(summary_files[-1]) if summary_files else None
+    if latest_summary and latest_summary in index_content:
+        # 获取索引中最新的日期
+        import re
+        dates = re.findall(r'\((\d{4}-\d{2}-\d{2})\)', index_content)
+        if dates:
+            latest_in_index = max(dates)
+            latest_date = latest_summary[:10]
+            if latest_in_index >= latest_date:
+                print(f"索引已包含最新条目 ({latest_in_index})，无需更新")
+                exit(0)
 
     # 在 "## 最新汇总" 后面插入新条目（替换原来的占位内容）
     lines = index_content.split('\n')

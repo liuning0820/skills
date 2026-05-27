@@ -1,2 +1,3 @@
 skills/rss-ingest/scripts/__pycache__/*
 skills/rss-ingest/scripts/.claude/*
+skills/rss-ingest/scripts/.claude/settings.local.json
