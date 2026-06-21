@@ -123,7 +123,7 @@ def fetch_rss(url: str) -> list:
             'link': link.text if link is not None else '',
             'date': parse_date(pub_date.text) if pub_date is not None else datetime.now().strftime('%Y-%m-%d'),
             'description': description.text if description is not None else '',
-            'content': content_item.text if content_item is not None else (description.text or '')
+            'content': content_item.text if content_item is not None else (description.text if description is not None else '')
         })
 
     # Atom 格式
